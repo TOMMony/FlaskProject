@@ -20,27 +20,29 @@ class User(UserMixin):
             return None
 
         user = User(
-            id_=user[0], name=user[1], email=user[2], profile_pic=user[3]
+            id_=user[0], name=user[1], email=user[2], profile_pic=user[3], points=user[4]
         )
         return user
 
     @staticmethod
-    def create(id_, name, email, profile_pic):
+    def create(id_, name, email, profile_pic, points):
         db = get_db()
         db.execute(
-            "INSERT INTO user (id, name, email, profile_pic) "
-            "VALUES (?, ?, ?, ?)",
-            (id_, name, email, profile_pic),
+            "INSERT INTO user (id, name, email, profile_pic, points) "
+            "VALUES (?, ?, ?, ?, ?)",
+            (id_, name, email, profile_pic, points),
         )
         db.commit()
 
     @staticmethod
     def get_points(user_id):
         db = get_db()
-        points = db.execute(
-            "SELECT points FROM user WHERE id = ?", (user_id,)
-        ).fetchone()
-        if not points:
+        try:
+            points = db.execute(
+                "SELECT points FROM user WHERE id = ?", (user_id,)
+            ).fetchone()
+        except:
+            #User has not been created yet
             return 0
-
+        
         return points
