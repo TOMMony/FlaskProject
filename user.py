@@ -3,11 +3,12 @@ from flask_login import UserMixin
 from db import get_db
 
 class User(UserMixin):
-    def __init__(self, id_, name, email, profile_pic):
+    def __init__(self, id_, name, email, profile_pic, points):
         self.id = id_
         self.name = name
         self.email = email
         self.profile_pic = profile_pic
+        self.points = points
 
     @staticmethod
     def get(user_id):
@@ -32,3 +33,14 @@ class User(UserMixin):
             (id_, name, email, profile_pic),
         )
         db.commit()
+
+    @staticmethod
+    def get_points(user_id):
+        db = get_db()
+        points = db.execute(
+            "SELECT points FROM user WHERE id = ?", (user_id,)
+        ).fetchone()
+        if not points:
+            return 0
+
+        return points

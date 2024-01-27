@@ -8,7 +8,6 @@ from oauthlib.oauth2 import WebApplicationClient
 import requests
 from db import init_db_command
 from user import User
-from api import get_33
 import json 
 import sqlite3
 import os

@@ -3,4 +3,5 @@ CREATE TABLE user (
   name TEXT NOT NULL,
   email TEXT UNIQUE NOT NULL,
   profile_pic TEXT NOT NULL
+  points INT NOT NULL
 );
