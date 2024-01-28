@@ -172,5 +172,16 @@ def render_points():
 def schedule():
     return render_template("table.html")
 
+@app.route("/handle_data", methods=["POST"])
+@login_required
+def handle_data():
+    course_name = request.form["coursename"]
+    location = request.form["location"]
+    time = request.form["time"]
+    days = "monday" in request.form, "tuesday" in request.form, "wednesday" in request.form, "thursday" in request.form, "friday" in request.form
+    print(course_name, location, time,)
+    return redirect(url_for("schedule"))
+
+
 if __name__ == '__main__':
     app.run(debug=True, ssl_context="adhoc")
