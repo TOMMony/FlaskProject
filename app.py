@@ -8,7 +8,6 @@ from oauthlib.oauth2 import WebApplicationClient
 import requests
 from db import init_db_command
 from user import User
-from schedule import Schedule
 import json 
 import sqlite3
 import os
@@ -39,11 +38,11 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 # Naive database setup
-try:
-    init_db_command()
-except sqlite3.OperationalError:
-    # Assume it's already been created
-    pass
+#try:
+#    init_db_command()
+#except sqlite3.OperationalError:
+#    # Assume it's already been created
+#    pass
 
 # OAuth 2 client setup
 client = WebApplicationClient(GOOGLE_CLIENT_ID)
@@ -134,7 +133,7 @@ def callback():
     # Create a user in your db with the information provided
     # by Google
     user = User(
-        id_=unique_id, name=users_name, email=users_email, profile_pic=picture, points=User.get_points(unique_id)
+        id_=unique_id, name=users_name, email=users_email, profile_pic=picture, points=0
     )
 
     # Doesn't exist? Add it to the database.
@@ -171,40 +170,17 @@ def render_points():
 @app.route("/schedule")
 @login_required
 def schedule():
-    return render_template("table.html", scheduled_courses = _get_scheduled_courses(current_user.id))
+    return render_template("table.html")
 
 @app.route("/handle_data", methods=["POST"])
 @login_required
 def handle_data():
-    schedule_id = Schedule.create_id()
     course_name = request.form["coursename"]
     location = request.form["location"]
     time = request.form["time"]
-    days = ''
-    if "monday" in request.form:
-        days += "M"
-    if "tuesday" in request.form:
-        days += "T"
-    if "wednesday" in request.form:
-        days += "W"
-    if "thursday" in request.form:
-        days += "Th"
-    if "friday" in request.form:
-        days += "F"
-    schedule = Schedule(schedule_id, course_name, location, time, days, current_user.id)
-    if not Schedule.get(schedule_id):
-        Schedule.create(schedule_id, course_name, location, time, days, current_user.id)
-    scheduled_courses = _get_scheduled_courses(current_user.id)
+    days = "monday" in request.form, "tuesday" in request.form, "wednesday" in request.form, "thursday" in request.form, "friday" in request.form
+    print(course_name, location, time,)
     return redirect(url_for("schedule"))
-
-def _get_scheduled_courses(current_user_id) -> tuple(str, str, str, str, str, str):
-    with sqlite3.connect("sqlite_db") as db:
-        cursor = db.cursor()
-        sql = "SELECT * FROM schedule WHERE id = ?", (current_user_id)
-        cursor.execute(sql)
-        print(cursor.fetchall())
-
-
 
 
 if __name__ == '__main__':
