@@ -171,6 +171,7 @@ def render_points():
 @app.route("/schedule")
 @login_required
 def schedule():
+    print(f"lol {_get_scheduled_courses(current_user.id)}")
     return render_template("table.html", scheduled_courses = _get_scheduled_courses(current_user.id))
 
 @app.route("/handle_data", methods=["POST"])
@@ -194,15 +195,14 @@ def handle_data():
     schedule = Schedule(schedule_id, course_name, location, time, days, current_user.id)
     if not Schedule.get(schedule_id):
         Schedule.create(schedule_id, course_name, location, time, days, current_user.id)
-    scheduled_courses = _get_scheduled_courses(current_user.id)
     return redirect(url_for("schedule"))
 
-def _get_scheduled_courses(current_user_id) -> tuple(str, str, str, str, str, str):
+def _get_scheduled_courses(current_user_id) -> list:
     with sqlite3.connect("sqlite_db") as db:
         cursor = db.cursor()
-        sql = "SELECT * FROM schedule WHERE id = ?", (current_user_id)
+        sql = f"SELECT * FROM schedule WHERE id = '{current_user_id}'"
         cursor.execute(sql)
-        print(cursor.fetchall())
+        return cursor.fetchall()
 
 
 

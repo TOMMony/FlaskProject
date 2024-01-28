@@ -41,8 +41,9 @@
     </table>
     <table>
         <tr>
-        {% for course in scheduled_course %}
-            <th>{course}</th>
+        {% for course in scheduled_courses %}
+            <th>{{course}}</th>
+        {% endfor %}
         </tr>
     </table>
     <script src="frontend/course.js"></script>

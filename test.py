@@ -5,7 +5,7 @@ def display_stock():
         cursor = db.cursor()
         #sql = "SELECT points FROM user;"
         #sql = "SELECT name FROM sqlite_master WHERE type='table';"
-        sql = "SELECT * FROM schedule WHERE id = "
+        sql = "SELECT * FROM schedule WHERE id = '100113150562580298045'"
         cursor.execute(sql)
         print(cursor.fetchall())
 
