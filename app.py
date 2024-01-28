@@ -184,21 +184,8 @@ def handle_data():
     course_name = request.form["coursename"]
     location = request.form["location"]
     time = request.form["time"]
-    days = ''
-    if "monday" in request.form:
-        days += "M"
-    if "tuesday" in request.form:
-        days += "Tu"
-    if "wednesday" in request.form:
-        days += "W"
-    if "thursday" in request.form:
-        days += "Th"
-    if "friday" in request.form:
-        days += "F"
-    if "sunday" in request.form:
-        days += "Su"
-    if "saturday" in request.form:
-        days += "Sa"
+    days = _get_days_of_course(request.form)
+    
     schedule = Schedule(schedule_id, course_name, location, time, days, current_user.id)
     if not Schedule.get(schedule_id):
         Schedule.create(schedule_id, course_name, location, time, days, current_user.id)
@@ -211,6 +198,24 @@ def remove_data():
     if course_name is not None and id is not None:
         Schedule.delete(course_name, id)
     return redirect(url_for("schedule"))
+
+def _get_days_of_course(form: list) -> dict:
+    days = ""
+    if "monday" in form:
+        days += "M"
+    if "tuesday" in form:
+        days += "Tu"
+    if "wednesday" in form:
+        days += "W"
+    if "thursday" in form:
+        days += "Th"
+    if "friday" in form:
+        days += "F"
+    if "sunday" in form:
+        days += "Su"
+    if "saturday" in form:
+        days += "Sa"
+    return days
 
 
 
