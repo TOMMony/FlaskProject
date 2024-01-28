@@ -34,6 +34,10 @@
         <label for="sunday">Sunday</label><br>
         <button type="submit">Add Course</button>
     </form>
+    <form id="courseForm" action = "{{url_for('remove_data')}}" method="post">
+        Course Name: <input type="text" name="coursename" id="courseName"><br>
+        <button type="submit">Delete Course</button>
+    </form>
 
     <table id="courseTable">
         <tr>
