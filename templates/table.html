@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link type="text/css" rel="stylesheet" href="style.css"> -->
+    <!-- <script src="script.js"></script> -->
+        <link rel = "stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+    <title>ZOTPAL!!</title>
+</head>
+<body>
+    <a href = "main_page" class="top_right_button">
+        <button>Back to Home</button>
+    </a>
+    <h1>Enter Your Courses!</h1>
+    <form id="courseForm">
+        Course Name: <input type="text" id="courseName"><br>
+        Location: <input type="text" id="location"><br>
+        Time: <input type="text" id="time"><br>
+        Days:<br>
+        <input type="checkbox" id="monday" name="day" value="Monday">
+        <label for="monday">Monday</label><br>
+        <input type="checkbox" id="tuesday" name="day" value="Tuesday">
+        <label for="tuesday">Tuesday</label><br>
+        <input type="checkbox" id="wednesday" name="day" value="Wednesday">
+        <label for="wednesday">Wednesday</label><br>
+        <input type="checkbox" id="thursday" name="day" value="Thursday">
+        <label for="thursday">Thursday</label><br>
+        <input type="checkbox" id="friday" name="day" value="Friday">
+        <label for="friday">Friday</label><br>
+        <button type="button" onclick="addCourse()">Add Course</button>
+    </form>
+
+    <table id="courseTable">
+        <tr>
+            <th>Course Name</th>
+            <th>Location</th>
+            <th>Time</th>
+            <th>Days</th>
+        </tr>
+    </table>
+    <script src="frontend/course.js"></script>
+</body>
+</html>

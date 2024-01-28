@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        function update_points(){
+            fetch("/process_points", {
+                method: "GET"
+            })
+            .then(html_response => {
+                return html_response.text()
+            })
+            .then(text => {
+                pointElement = document.getElementById("score")
+                pointElement.innerHTML = text
+            })
+            .then()
+            setTimeout(update_points, 5000);
+        }
+        update_points()
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <!-- <script src="script.js"></script> -->
+    <title>ZOTPAL!!</title>
+</head>
+<body>
+    <h1>Zotpals</h1>
+    <img class="anteater" src="{{url_for('static', filename='anteater.png')}}" alt = "animal">
+    <div id="score">Level: <span id="level">1</span></div>
+    
+    <button id="level-up">Level Up</button>
+    <a href = "/schedule">
+        <button>View/Edit Classes</button>
+    </a>
+    <script src="frontend/main.js"></script>
+</body>
+</html>

@@ -11,6 +11,15 @@ class User(UserMixin):
         self.points = points
 
     @staticmethod
+    def add_point(user_id):
+        db = get_db()
+        curr_points = User.get_points(user_id)
+        db.execute(
+            "UPDATE user SET points = ? WHERE id = ?", (curr_points + 1, user_id)
+        )
+        db.commit()
+
+    @staticmethod
     def get(user_id):
         db = get_db()
         user = db.execute(
@@ -43,6 +52,7 @@ class User(UserMixin):
             ).fetchone()
         except:
             #User has not been created yet
+            print("User has not been created yet")
             return 0
         
-        return points
+        return points[0]

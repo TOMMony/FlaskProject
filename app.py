@@ -59,14 +59,18 @@ def get_google_provider_cfg():
 @app.route("/")
 def index():
     if current_user.is_authenticated:
-        return (
+        '''return (
             "<p>Hello, {}! You're logged in! Email: {}</p>"
             "<div><p>Google Profile Picture:</p>"
             '<img src="{}" alt="Google profile pic"></img></div>'
             '<a class="button" href="/logout">Logout</a>'.format(
                 current_user.name, current_user.email, current_user.profile_pic
             )
-        )
+        )'''
+        current_user.points = 10
+        print(current_user.points)
+        print('points changed')
+        return redirect("main_page")
     else:
         return '<a class="button" href="/login">Google Login</a>'
     
@@ -147,6 +151,26 @@ def callback():
 def logout():
     logout_user()
     return redirect(url_for("index"))
+
+@app.route("/main_page")
+@login_required
+def main_page():
+    return render_template("index.html", points = current_user.points)
+
+@app.route("/process_points")
+def render_points():
+    print("User id:", current_user.id)
+    print("Points before adding:", User.get_points(current_user.id))
+    User.add_point(current_user.id)
+    user_points = User.get_points(current_user.id)
+    print("Points after adding:", user_points)
+
+    return render_template('points.html', points = user_points)
+
+@app.route("/schedule")
+@login_required
+def schedule():
+    return render_template("table.html")
 
 if __name__ == '__main__':
     app.run(debug=True, ssl_context="adhoc")
