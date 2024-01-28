@@ -1,1 +1,7 @@
+
+{% if points|float >= 10 %}
+<img class="anteater" src="{{url_for('static', filename='stronk_anteater.png')}}" alt = "animal">
+{% else %}
+    <img class="anteater" src="{{url_for('static', filename='anteater2.0.png')}}" alt = "animal">
+{% endif %}
 <p>Points: {{points}}</p>

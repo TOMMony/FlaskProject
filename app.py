@@ -70,11 +70,9 @@ def index():
             )
         )'''
         current_user.points = 10
-        print(current_user.points)
-        print('points changed')
         return redirect("main_page")
     else:
-        return '<a class="button" href="/login">Google Login</a>'
+        return  render_template("login.html")
     
 @app.route("/login")
 def login():
@@ -161,20 +159,15 @@ def main_page():
 
 @app.route("/process_points")
 def render_points():
-    print("User id:", current_user.id)
-    print("Points before adding:", User.get_points(current_user.id))
     current_course = get_current_course(_get_scheduled_courses(current_user.id))
     if current_course is not None and user_in_radius(current_course[2]):
         User.add_point(current_user.id)
     user_points = User.get_points(current_user.id)
-    print("Points after adding:", user_points)
-
     return render_template('points.html', points = user_points)
 
 @app.route("/schedule")
 @login_required
 def schedule():
-    print(f"lol {_get_scheduled_courses(current_user.id)}")
     return render_template("table.html", scheduled_courses = _get_scheduled_courses(current_user.id))
 
 @app.route("/handle_data", methods=["POST"])
