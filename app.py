@@ -9,6 +9,7 @@ import requests
 from db import init_db_command
 from user import User
 from schedule import Schedule
+from location import user_in_radius, get_current_course
 import json 
 import sqlite3
 import os
@@ -162,7 +163,9 @@ def main_page():
 def render_points():
     print("User id:", current_user.id)
     print("Points before adding:", User.get_points(current_user.id))
-    User.add_point(current_user.id)
+    current_course = get_current_course(_get_scheduled_courses(current_user.id))
+    if current_course is not None and user_in_radius(current_course):
+        User.add_point(current_user.id)
     user_points = User.get_points(current_user.id)
     print("Points after adding:", user_points)
 
@@ -185,7 +188,7 @@ def handle_data():
     if "monday" in request.form:
         days += "M"
     if "tuesday" in request.form:
-        days += "T"
+        days += "Tu"
     if "wednesday" in request.form:
         days += "W"
     if "thursday" in request.form:
