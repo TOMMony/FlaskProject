@@ -13,9 +13,14 @@ class Schedule:
 
     @staticmethod
     def create_id():
-        id = Schedule._id
-        Schedule._id += 1
-        return id
+        db = get_db()
+        max_id = db.execute(
+            "SELECT MAX(schedule_id) FROM schedule"
+        ).fetchone()[0]
+        print(max_id)
+        if not max_id:
+            return 0
+        return int(max_id) + 1
 
     @staticmethod
     def get(schedule_id):
