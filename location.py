@@ -16,7 +16,7 @@ def calculate_distance(location1: Coordinate(int, int), location2: Coordinate(in
     return 2* radius * asin(sqrt(body))
 
 def user_in_radius(lecture_location) -> bool:
-    distance = calculate_distance(user_location, lecture_location)
+    distance = calculate_distance(user_location, get_coordinate(lecture_location))
     return distance <= 1
 
 def get_current_course(courses) -> tuple|None:

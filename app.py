@@ -164,7 +164,7 @@ def render_points():
     print("User id:", current_user.id)
     print("Points before adding:", User.get_points(current_user.id))
     current_course = get_current_course(_get_scheduled_courses(current_user.id))
-    if current_course is not None and user_in_radius(current_course):
+    if current_course is not None and user_in_radius(current_course[2]):
         User.add_point(current_user.id)
     user_points = User.get_points(current_user.id)
     print("Points after adding:", user_points)
@@ -195,6 +195,10 @@ def handle_data():
         days += "Th"
     if "friday" in request.form:
         days += "F"
+    if "sunday" in request.form:
+        days += "Su"
+    if "saturday" in request.form:
+        days += "Sa"
     schedule = Schedule(schedule_id, course_name, location, time, days, current_user.id)
     if not Schedule.get(schedule_id):
         Schedule.create(schedule_id, course_name, location, time, days, current_user.id)

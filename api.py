@@ -9,7 +9,7 @@ FORWARD_SEARCH_URL = 'https://nominatim.openstreetmap.org/search?format=json&q='
 Coordinate = namedtuple('Coordinate', ['latitude', 'longitude'])
 
 def get_coordinate(named_location: str) -> Coordinate:
-    named_location += ''
+    named_location += ' university of california irvine'
     encoded_location = urllib.parse.quote(named_location)
     request = urllib.request.Request(FORWARD_SEARCH_URL + encoded_location)
     response = urllib.request.urlopen(request)
