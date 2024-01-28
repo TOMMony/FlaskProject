@@ -28,6 +28,10 @@
         <label for="thursday">Thursday</label><br>
         <input type="checkbox" id="friday" name="friday" value="Friday">
         <label for="friday">Friday</label><br>
+        <input type="checkbox" id="saturday" name="saturday" value="Saturday">
+        <label for="saturday">Saturday/label><br>
+        <input type="checkbox" id="sunday" name="sunday" value="Sunday">
+        <label for="sunday">Sunday</label><br>
         <button type="submit">Add Course</button>
     </form>
 
@@ -38,14 +42,16 @@
             <th>Time</th>
             <th>Days</th>
         </tr>
-    </table>
-    <table>
-        <tr>
         {% for course in scheduled_courses %}
-            <th>{{course}}</th>
-        {% endfor %}
+        <tr>
+            <td>{{course[1]}}</td>
+            <td>{{course[2]}}</td>
+            <td>{{course[3]}}</td>
+            <td>{{course[4]}}</td>
         </tr>
+        {% endfor %}
     </table>
+    
     <script src="frontend/course.js"></script>
 </body>
 </html>
