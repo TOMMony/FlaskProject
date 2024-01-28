@@ -5,3 +5,4 @@ CREATE TABLE user (
   profile_pic TEXT NOT NULL,
   points int NOT NULL
 );
+

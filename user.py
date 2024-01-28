@@ -50,9 +50,8 @@ class User(UserMixin):
             points = db.execute(
                 "SELECT points FROM user WHERE id = ?", (user_id,)
             ).fetchone()
+            return points[0]
         except:
             #User has not been created yet
             print("User has not been created yet")
             return 0
-        
-        return points[0]

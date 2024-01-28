@@ -39,6 +39,12 @@
             <th>Days</th>
         </tr>
     </table>
+    <table>
+        <tr>
+        {% for course in scheduled_course %}
+            <th>{course}</th>
+        </tr>
+    </table>
     <script src="frontend/course.js"></script>
 </body>
 </html>
