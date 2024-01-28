@@ -7,6 +7,9 @@ def display_stock():
         #sql = "SELECT name FROM sqlite_master WHERE type='table';"
         sql = "SELECT MAX(id) FROM schedule"
         cursor.execute(sql)
+        course_name = "course"
+        id = "user_id"
+
         print(cursor.fetchone()[0])
 
 display_stock()

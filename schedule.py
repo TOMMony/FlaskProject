@@ -36,11 +36,20 @@ class Schedule:
         return schedule
 
     @staticmethod
-    def create(schedule_id, course_name, location, time, days, id) -> tuple:
+    def create(schedule_id, course_name, location, time, days, id):
         db = get_db()
         db.execute(
             "INSERT INTO schedule (schedule_id, course_name, location, time, days, id) "
             "VALUES (?, ?, ?, ?, ?, ?)",
             (schedule_id, course_name, location, time, days, id),
+        )
+        db.commit()
+
+    @staticmethod
+    def delete(course_name, id):
+        db = get_db()
+        db.execute(
+            "DELETE FROM schedule WHERE course_name = ? AND id = ?",
+            (course_name, id),
         )
         db.commit()
