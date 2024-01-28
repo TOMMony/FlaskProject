@@ -194,7 +194,7 @@ def handle_data():
 @app.route("/remove_data", methods = ["POST"])
 @login_required
 def remove_data():
-    course_name, id = request.form["course_name"], request.form["id"]
+    course_name, id = request.form["course_name"], current_user.id
     if course_name is not None and id is not None:
         Schedule.delete(course_name, id)
     return redirect(url_for("schedule"))
